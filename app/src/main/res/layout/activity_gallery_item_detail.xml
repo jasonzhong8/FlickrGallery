@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/colorPrimary"
+              android:orientation="vertical"
+              tools:context=".gallery_item_detail.GalleryItemDetailActivity">
+
+    <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin2"
+            android:layout_gravity="top"
+            android:background="@color/white" />
+
+    <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <include layout="@layout/content_gallery_item_detail" />
+
+        <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="gone" />
+    </FrameLayout>
+
+
+</LinearLayout>

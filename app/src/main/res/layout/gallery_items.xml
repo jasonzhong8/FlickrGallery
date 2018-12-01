@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/colorPrimary"
+              android:orientation="vertical"
+              tools:context=".gallery_items.GalleryActivity">
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_margin="@dimen/margin10"
+                  android:orientation="horizontal"
+    >
+        <EditText android:id="@+id/search_editText"
+                  android:layout_width="0dp"
+                  android:layout_height="wrap_content"
+                  android:textColor="@color/white"
+                  android:textColorHint="@color/white"
+                  android:layout_weight="1"
+                  android:hint="Search Tag"
+        />
+        <ToggleButton android:id="@+id/search_toggleButton"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:text="Search"
+                      android:textOff="Search"
+                      android:textOn="All"
+                      android:textColor="@color/white"
+        />
+    </LinearLayout>
+
+    <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin2"
+            android:layout_gravity="top"
+            android:background="@color/white"/>
+
+    <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <GridView
+                android:id="@+id/gallery_gridview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/margin10"
+                android:layout_marginRight="@dimen/margin10"
+                android:layout_marginTop="@dimen/margin10"
+                android:horizontalSpacing="10dp"
+                android:numColumns="3"
+                android:scrollbarStyle="outsideOverlay"
+                android:scrollbars="vertical"
+                android:verticalScrollbarPosition="right"
+                android:verticalSpacing="@dimen/margin10"/>
+
+        <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="gone"/>
+
+    </FrameLayout>
+</LinearLayout>
