@@ -1,5 +1,6 @@
 package com.jasonzhong.flickrimagegalleryapplication.gallery_items
 
+import android.content.Context
 import com.jasonzhong.flickrimagegalleryapplication.model.PhotoData
 import java.util.ArrayList
 
@@ -33,6 +34,8 @@ interface ItemsContract {
             PhotoDataList: ArrayList<PhotoData>,
             onSearchItemsLoadingFinishedListener: OnSearchItemsLoadingFinishedListener
         )
+
+        fun addFavourite(photoDataList: ArrayList<PhotoData>, context: Context)
 
     }
 

@@ -20,6 +20,8 @@ class GalleryActivity : AppCompatActivity(), ItemsContract.ItemsView,
     private var galleryAdapter: GalleryAdapter? = null
     private var itemsPresenter: ItemsPresenterImpl? = null
     private val itemList = ArrayList<PhotoData>()
+    private var selectedIndex = 0
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +44,7 @@ class GalleryActivity : AppCompatActivity(), ItemsContract.ItemsView,
                 this@GalleryActivity,
                 GalleryItemDetailActivity::class.java
             )
+            selectedIndex = position
             intent.putExtra("PhotoData", itemList[position])
             startActivity(intent)
         }
@@ -49,6 +52,7 @@ class GalleryActivity : AppCompatActivity(), ItemsContract.ItemsView,
         gallery_gridview!!.adapter = galleryAdapter
         itemsPresenter = ItemsPresenterImpl(this)
         itemsPresenter!!.requestAllItemsFromServer(this)
+
     }
 
     override fun onResume() {
@@ -103,6 +107,7 @@ class GalleryActivity : AppCompatActivity(), ItemsContract.ItemsView,
 
     override fun onDestroy() {
         super.onDestroy()
+        itemsPresenter!!.addFavourite(itemList, this@GalleryActivity)
         itemsPresenter!!.onDestroy()
     }
 

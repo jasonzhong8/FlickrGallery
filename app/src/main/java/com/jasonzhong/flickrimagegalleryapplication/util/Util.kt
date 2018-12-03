@@ -1,12 +1,15 @@
 package com.jasonzhong.flickrimagegalleryapplication.util
 
+import android.Manifest
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
-import android.support.v4.content.ContextCompat.getSystemService
+import android.content.pm.PackageManager
+import android.support.v4.app.ActivityCompat
+import android.support.v4.content.ContextCompat
 import android.util.DisplayMetrics
 import android.view.inputmethod.InputMethodManager
-import com.jasonzhong.flickrimagegalleryapplication.R
+
 
 object Util {
 
@@ -44,6 +47,24 @@ object Util {
             val inputMethodManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             inputMethodManager.hideSoftInputFromWindow(context.currentFocus!!.windowToken, 0)
         }
+    }
+
+    fun checkPermission(context: Context): Boolean {
+        val result = ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE)
+        val result1 = ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+
+        return result == PackageManager.PERMISSION_GRANTED && result1 == PackageManager.PERMISSION_GRANTED
+    }
+
+    fun requestPermission(context: Activity) {
+
+        ActivityCompat.requestPermissions(
+            context, arrayOf(
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ), Constant.PERMISSION_REQUEST_CODE
+        )
+
     }
 
 }

@@ -13,5 +13,7 @@
     <string name="published">Published:</string>
     <string name="tags">Tags:</string>
     <string name="image">Image:</string>
+    <string name="share">Share</string>
+    <string name="favourite">Favourite</string>
 
 </resources>

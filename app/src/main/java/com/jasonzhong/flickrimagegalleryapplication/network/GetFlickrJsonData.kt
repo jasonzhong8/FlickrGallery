@@ -3,13 +3,12 @@ package com.jasonzhong.flickrimagegalleryapplication.network
 import android.net.Uri
 import android.os.AsyncTask
 import android.util.Log
-import com.jasonzhong.flickrimagegalleryapplication.model.*
+import com.jasonzhong.flickrimagegalleryapplication.model.DownloadStatus
+import com.jasonzhong.flickrimagegalleryapplication.model.PhotoData
 import com.jasonzhong.flickrimagegalleryapplication.util.Constant
-import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
-
-import java.util.ArrayList
+import java.util.*
 
 open class GetFlickrJsonData(lang: String, matchAll: Boolean?, private val Callback: OnDataAvailable?) :
     AsyncTask<String, Void, ArrayList<PhotoData>>(), RawJsonData.OnDownloadComplete {
@@ -78,7 +77,7 @@ open class GetFlickrJsonData(lang: String, matchAll: Boolean?, private val Callb
                     val dateTaken = item.getString("date_taken")
                     val link = item.getString("link")
                     val big_image_link = image.replaceFirst("_m".toRegex(), "_b")
-                    val photo = PhotoData(author, authorID, title, dateTaken, published, tags, big_image_link, image)
+                    val photo = PhotoData(author, authorID, title, dateTaken, published, tags, big_image_link, image,false)
                     photoDataArrayList!!.add(photo)
                     //                Log.d(TAG, "onDownloadComplete: \n"+ photo.toString());
 

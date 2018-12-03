@@ -12,7 +12,8 @@ class PhotoData(
     val published: String,
     val tags: String,
     val big_img_url: String,
-    val image: String
+    val image: String,
+    var isFavourite: Boolean
 
 ) : Serializable {
 

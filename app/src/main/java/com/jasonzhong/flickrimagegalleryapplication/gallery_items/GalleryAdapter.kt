@@ -7,10 +7,7 @@ import android.support.annotation.Nullable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
-import android.widget.FrameLayout
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
@@ -22,13 +19,19 @@ import com.jasonzhong.flickrimagegalleryapplication.model.GlideApp
 import com.jasonzhong.flickrimagegalleryapplication.model.PhotoData
 import com.jasonzhong.flickrimagegalleryapplication.util.Util
 import kotlinx.android.synthetic.main.item_layout.view.*
+import android.R.id.edit
+import android.content.SharedPreferences
+import com.jasonzhong.flickrimagegalleryapplication.util.Constant
+
 
 class GalleryAdapter(private val context: Activity, private val itemlist: List<PhotoData>) : BaseAdapter() {
 
     private val layoutinflater: LayoutInflater
+    private val favourites: Set<String>
 
     init {
         layoutinflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        favourites = getFavourites();
     }
 
     override fun getCount(): Int {
@@ -44,7 +47,7 @@ class GalleryAdapter(private val context: Activity, private val itemlist: List<P
     }
 
     override fun getView(i: Int, convertView: View?, viewGroup: ViewGroup): View {
-        var view : View
+        var view: View
         var listViewHolder: ViewHolder
 
         if (convertView != null) {
@@ -57,6 +60,7 @@ class GalleryAdapter(private val context: Activity, private val itemlist: List<P
             listViewHolder.title_textView = view.findViewById(R.id.title_textView) as TextView?
             listViewHolder.author_textView = view.findViewById(R.id.author_textView) as TextView?
             listViewHolder.thumbnail_imageView = view.findViewById(R.id.thumbnail_imageView) as ImageView?
+            listViewHolder.favourite_checkbox = view.findViewById(R.id.favourite_checkbox) as CheckBox?
 
             view!!.tag = listViewHolder
         }
@@ -64,6 +68,19 @@ class GalleryAdapter(private val context: Activity, private val itemlist: List<P
         val data = itemlist[i]
         listViewHolder.title_textView!!.text = data!!.title
         listViewHolder.author_textView!!.text = data.author
+        if (isFavourite(data.author_id)) {
+            listViewHolder.favourite_checkbox!!.isChecked = true
+        } else {
+            listViewHolder.favourite_checkbox!!.isChecked = false
+        }
+
+        listViewHolder.favourite_checkbox!!.setOnCheckedChangeListener({ buttonView, isChecked ->
+            if (isChecked) {
+                data.isFavourite = true
+            } else {
+                data.isFavourite = false
+            }
+        })
 
         val image_width = Util.getScreenWidthPixels(context)
         val image_hight = (image_width / 3).toInt()
@@ -72,17 +89,26 @@ class GalleryAdapter(private val context: Activity, private val itemlist: List<P
 
         GlideApp.with(context)
             .load(data.image)
-            .centerCrop()
+            .centerInside()
             .transition(DrawableTransitionOptions.withCrossFade()) //Optional
-            .skipMemoryCache(true)  //No memory cache
-            .diskCacheStrategy(DiskCacheStrategy.NONE)   //No disk cache
+            .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
             .listener(object : RequestListener<Drawable> {
-                override fun onLoadFailed(@Nullable e: GlideException?, model: Any, target: Target<Drawable>, isFirstResource: Boolean): Boolean {
+                override fun onLoadFailed(
+                    @Nullable e: GlideException?, model: Any,
+                    target: Target<Drawable>,
+                    isFirstResource: Boolean
+                ): Boolean {
                     view!!.thumbnail_imageView.setImageResource(R.drawable.no_image_icon);
                     return true
                 }
 
-                override fun onResourceReady(resource: Drawable, model: Any, target: Target<Drawable>, dataSource: DataSource, isFirstResource: Boolean): Boolean {
+                override fun onResourceReady(
+                    resource: Drawable,
+                    model: Any,
+                    target: Target<Drawable>,
+                    dataSource: DataSource,
+                    isFirstResource: Boolean
+                ): Boolean {
                     return false
                 }
             })
@@ -91,10 +117,34 @@ class GalleryAdapter(private val context: Activity, private val itemlist: List<P
         return view
     }
 
-    internal class ViewHolder (view: View){
+    internal class ViewHolder(view: View) {
         var title_textView: TextView? = null
         var author_textView: TextView? = null
         var thumbnail_imageView: ImageView? = null
+        var favourite_checkbox: CheckBox? = null
     }
+
+    fun getFavourites(): Set<String> {
+        val settings = context.getSharedPreferences(Constant.FAVORITE_PREFERENCES, Context.MODE_PRIVATE)
+        val editor = settings.edit()
+        val Favourites = settings.getStringSet(Constant.FAVORITE, HashSet<String>())
+        return Favourites;
+    }
+
+    private fun isFavourite(authorId: String): Boolean {
+
+        var isFavourite = false
+        val array = favourites!!.toTypedArray()
+        if (array != null && array.size > 0) {
+            for (item in array) {
+                if (item == authorId) {
+                    isFavourite = true
+                    break
+                }
+            }
+        }
+        return isFavourite
+    }
+
 }
 
