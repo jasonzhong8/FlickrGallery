@@ -27,7 +27,7 @@ class ItemsPresenterImpl(internal var view: ItemsContract.ItemsView?) : ItemsCon
         }
         for (authorId in authorIDlist) {
 
-            favourites!!.add(authorId)
+            favourites?.add(authorId)
 
         }
 
@@ -44,7 +44,7 @@ class ItemsPresenterImpl(internal var view: ItemsContract.ItemsView?) : ItemsCon
 
     override fun requestAllItemsFromServer(onItemsLoadingFinishedListener: ItemsContract.ItemsPresenter.OnItemsLoadingFinishedListener) {
         this.onItemsLoadingFinishedListener = onItemsLoadingFinishedListener
-        this.view!!.showProgress()
+        this.view?.showProgress()
         val flickrJsonData = GetFlickrJsonData("en-us", true, this)
         flickrJsonData.execute("")
     }
@@ -59,7 +59,7 @@ class ItemsPresenterImpl(internal var view: ItemsContract.ItemsView?) : ItemsCon
     }
 
     override fun onDataAvailable(data: ArrayList<PhotoData>?, status: DownloadStatus?) {
-        this.view!!.hideProgress()
+        this.view?.hideProgress()
         if (data != null && data.size > 0) {
             Collections.sort(
                 data,

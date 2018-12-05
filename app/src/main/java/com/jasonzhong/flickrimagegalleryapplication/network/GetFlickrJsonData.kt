@@ -10,15 +10,15 @@ import org.json.JSONException
 import org.json.JSONObject
 import java.util.*
 
-open class GetFlickrJsonData(lang: String, matchAll: Boolean?, private val Callback: OnDataAvailable?) :
+open class GetFlickrJsonData(lang: String, matchAll: Boolean, private val Callback: OnDataAvailable?) :
     AsyncTask<String, Void, ArrayList<PhotoData>>(), RawJsonData.OnDownloadComplete {
     private var photoDataArrayList: ArrayList<PhotoData>? = null
     private val lang = "en-us"
-    private var MatchAll = true
+    private var MatchAll = false
     private var runningOnSameThread = false
 
     init {
-        MatchAll = matchAll!!
+        MatchAll = matchAll
     }
 
     interface OnDataAvailable {
@@ -78,7 +78,7 @@ open class GetFlickrJsonData(lang: String, matchAll: Boolean?, private val Callb
                     val link = item.getString("link")
                     val big_image_link = image.replaceFirst("_m".toRegex(), "_b")
                     val photo = PhotoData(author, authorID, title, dateTaken, published, tags, big_image_link, image,false)
-                    photoDataArrayList!!.add(photo)
+                    photoDataArrayList?.add(photo)
                     //                Log.d(TAG, "onDownloadComplete: \n"+ photo.toString());
 
                 }
@@ -94,7 +94,7 @@ open class GetFlickrJsonData(lang: String, matchAll: Boolean?, private val Callb
 
         } else {
             //Download Failed
-            Log.e(TAG, "onDownloadComplete: Download Failed with status: " + status!!)
+            Log.e(TAG, "onDownloadComplete: Download Failed with status: " + status)
         }
     }
 

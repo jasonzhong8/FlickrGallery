@@ -62,19 +62,19 @@ class GalleryAdapter(private val context: Activity, private val itemlist: List<P
             listViewHolder.thumbnail_imageView = view.findViewById(R.id.thumbnail_imageView) as ImageView?
             listViewHolder.favourite_checkbox = view.findViewById(R.id.favourite_checkbox) as CheckBox?
 
-            view!!.tag = listViewHolder
+            view?.tag = listViewHolder
         }
 
         val data = itemlist[i]
-        listViewHolder.title_textView!!.text = data!!.title
-        listViewHolder.author_textView!!.text = data.author
+        listViewHolder.title_textView?.text = data?.title
+        listViewHolder.author_textView?.text = data.author
         if (isFavourite(data.author_id)) {
-            listViewHolder.favourite_checkbox!!.isChecked = true
+            listViewHolder.favourite_checkbox?.isChecked = true
         } else {
-            listViewHolder.favourite_checkbox!!.isChecked = false
+            listViewHolder.favourite_checkbox?.isChecked = false
         }
 
-        listViewHolder.favourite_checkbox!!.setOnCheckedChangeListener({ buttonView, isChecked ->
+        listViewHolder.favourite_checkbox?.setOnCheckedChangeListener({ buttonView, isChecked ->
             if (isChecked) {
                 data.isFavourite = true
             } else {
@@ -84,8 +84,8 @@ class GalleryAdapter(private val context: Activity, private val itemlist: List<P
 
         val image_width = Util.getScreenWidthPixels(context)
         val image_hight = (image_width / 3).toInt()
-        listViewHolder.thumbnail_imageView!!.layoutParams = FrameLayout.LayoutParams(image_width, image_hight)
-        listViewHolder.thumbnail_imageView!!.scaleType = ImageView.ScaleType.CENTER_CROP
+        listViewHolder.thumbnail_imageView?.layoutParams = FrameLayout.LayoutParams(image_width, image_hight)
+        listViewHolder.thumbnail_imageView?.scaleType = ImageView.ScaleType.CENTER_CROP
 
         GlideApp.with(context)
             .load(data.image)
@@ -98,7 +98,7 @@ class GalleryAdapter(private val context: Activity, private val itemlist: List<P
                     target: Target<Drawable>,
                     isFirstResource: Boolean
                 ): Boolean {
-                    view!!.thumbnail_imageView.setImageResource(R.drawable.no_image_icon);
+                    view?.thumbnail_imageView?.setImageResource(R.drawable.no_image_icon);
                     return true
                 }
 
@@ -112,7 +112,7 @@ class GalleryAdapter(private val context: Activity, private val itemlist: List<P
                     return false
                 }
             })
-            .into(view!!.thumbnail_imageView)
+            .into(view.thumbnail_imageView)
 
         return view
     }
@@ -134,7 +134,7 @@ class GalleryAdapter(private val context: Activity, private val itemlist: List<P
     private fun isFavourite(authorId: String): Boolean {
 
         var isFavourite = false
-        val array = favourites!!.toTypedArray()
+        val array = favourites?.toTypedArray()
         if (array != null && array.size > 0) {
             for (item in array) {
                 if (item == authorId) {

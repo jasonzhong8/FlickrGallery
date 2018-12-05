@@ -36,13 +36,13 @@ class GalleryItemDetailActivity : AppCompatActivity() {
         photoData = intent.getSerializableExtra("PhotoData") as PhotoData
 
         if (photoData != null) {
-            detailProgressBar!!.visibility = View.VISIBLE
+            detailProgressBar?.visibility = View.VISIBLE
             setData(photoData)
         }
     }
 
     private fun setData(photoData: PhotoData?) {
-        if (photoData!!.big_img_url != null) {
+        if (photoData?.big_img_url != null) {
             GlideApp.with(this)
                 .load(photoData.big_img_url)
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
@@ -56,7 +56,7 @@ class GalleryItemDetailActivity : AppCompatActivity() {
                     ): Boolean {
                         // log exception
                         Log.e("TAG", "Error loading image", e)
-                        detailProgressBar!!.visibility = View.GONE
+                        detailProgressBar?.visibility = View.GONE
                         return false
                     }
 
@@ -68,20 +68,20 @@ class GalleryItemDetailActivity : AppCompatActivity() {
                         isFirstResource: Boolean
                     ): Boolean {
                         mResource = resource;
-                        detailProgressBar!!.visibility = View.GONE
+                        detailProgressBar?.visibility = View.GONE
                         return false
                     }
                 })
-                .into(bigimage_imageView!!)
+                .into(bigimage_imageView)
         } else {
-            detailProgressBar!!.visibility = View.GONE
+            detailProgressBar?.visibility = View.GONE
         }
-        title_textView!!.text = resources.getString(R.string.title) + photoData.title
-        author_textView!!.text = resources.getString(R.string.author) + photoData.author
-        published_textView!!.text = resources.getString(R.string.published) + photoData.published
-        date_taken_textView!!.text = resources.getString(R.string.date_taken) + photoData.dateTaken
-        tags_textView!!.text = resources.getString(R.string.tags) + photoData.tags
-        image_textView!!.text = resources.getString(R.string.image) + photoData.image
+        title_textView?.text = resources.getString(R.string.title) + photoData?.title
+        author_textView?.text = resources.getString(R.string.author) + photoData?.author
+        published_textView?.text = resources.getString(R.string.published) + photoData?.published
+        date_taken_textView?.text = resources.getString(R.string.date_taken) + photoData?.dateTaken
+        tags_textView?.text = resources.getString(R.string.tags) + photoData?.tags
+        image_textView?.text = resources.getString(R.string.image) + photoData?.image
 
         share_button.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {

@@ -45,7 +45,7 @@ object Util {
     fun hideSoftKeyboard(context: Activity) {
         if (context.currentFocus != null) {
             val inputMethodManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            inputMethodManager.hideSoftInputFromWindow(context.currentFocus!!.windowToken, 0)
+            inputMethodManager.hideSoftInputFromWindow(context.currentFocus?.windowToken, 0)
         }
     }
 

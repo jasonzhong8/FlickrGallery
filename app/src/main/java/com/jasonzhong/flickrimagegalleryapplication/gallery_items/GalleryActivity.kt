@@ -34,12 +34,12 @@ class GalleryActivity : AppCompatActivity(), ItemsContract.ItemsView,
                 if (on) {
                     search()
                 } else {
-                    itemsPresenter!!.requestAllItemsFromServer(this@GalleryActivity)
+                    itemsPresenter?.requestAllItemsFromServer(this@GalleryActivity)
                 }
             }
         })
 
-        gallery_gridview!!.onItemClickListener = AdapterView.OnItemClickListener { parent, v, position, id ->
+        gallery_gridview?.onItemClickListener = AdapterView.OnItemClickListener { parent, v, position, id ->
             val intent = Intent(
                 this@GalleryActivity,
                 GalleryItemDetailActivity::class.java
@@ -49,9 +49,9 @@ class GalleryActivity : AppCompatActivity(), ItemsContract.ItemsView,
             startActivity(intent)
         }
         galleryAdapter = GalleryAdapter(this, itemList)
-        gallery_gridview!!.adapter = galleryAdapter
+        gallery_gridview?.adapter = galleryAdapter
         itemsPresenter = ItemsPresenterImpl(this)
-        itemsPresenter!!.requestAllItemsFromServer(this)
+        itemsPresenter?.requestAllItemsFromServer(this)
 
     }
 
@@ -61,11 +61,11 @@ class GalleryActivity : AppCompatActivity(), ItemsContract.ItemsView,
 
 
     override fun showProgress() {
-        progressBar!!.visibility = View.VISIBLE
+        progressBar.visibility = View.VISIBLE
     }
 
     override fun hideProgress() {
-        progressBar!!.visibility = View.GONE
+        progressBar.visibility = View.GONE
     }
 
 
@@ -81,7 +81,7 @@ class GalleryActivity : AppCompatActivity(), ItemsContract.ItemsView,
     override fun onFinished(photoData: ArrayList<PhotoData>) {
         itemList.clear()
         itemList.addAll(photoData)
-        galleryAdapter!!.notifyDataSetChanged()
+        galleryAdapter?.notifyDataSetChanged()
     }
 
     override fun onSearchFailure(message: String) {
@@ -97,18 +97,18 @@ class GalleryActivity : AppCompatActivity(), ItemsContract.ItemsView,
         Util.hideSoftKeyboard(this)
         itemList.clear()
         itemList.addAll(photoData)
-        galleryAdapter!!.notifyDataSetChanged()
+        galleryAdapter?.notifyDataSetChanged()
     }
 
     private fun search() {
         Util.hideSoftKeyboard(this)
-        itemsPresenter!!.requestSearchItemsFromServer(search_editText!!.text.toString(), itemList, this)
+        itemsPresenter?.requestSearchItemsFromServer(search_editText.text.toString(), itemList, this)
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        itemsPresenter!!.addFavourite(itemList, this@GalleryActivity)
-        itemsPresenter!!.onDestroy()
+        itemsPresenter?.addFavourite(itemList, this@GalleryActivity)
+        itemsPresenter?.onDestroy()
     }
 
 }
